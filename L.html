@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Titrasi Asam Basa</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: linear-gradient(135deg, #141e30, #243b55);
+  color: white;
+  text-align: center;
+}
+
+h1 { margin-top: 30px; }
+
+.menu { padding: 20px; }
+
+button {
+  margin: 10px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  background: cyan;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.section {
+  display: none;
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+.card {
+  background: rgba(255,255,255,0.1);
+  padding: 20px;
+  border-radius: 20px;
+  margin-top: 20px;
+  text-align: left;
+}
+
+.lab {
+  width: 150px;
+  height: 200px;
+  margin: auto;
+  border: 2px solid white;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.cairan {
+  width: 100%;
+  height: 100%;
+  background: red;
+  transition: 0.5s;
+}
+</style>
+</head>
+
+<body>
+
+<h1>⚗️ MATERI TITRASI ASAM BASA</h1>
+<div class="menu">
+<button onclick="show('materi')">📚 Materi</button>
+<button onclick="show('contoh')">🧪 Contoh Soal</button>
+<button onclick="show('sim1')">⚗️ Simulasi 1</button>
+<button onclick="show('sim2')">🎯 Simulasi 2</button>
+<button onclick="show('latihan')">🧠 Latihan Soal</button>
+</div>
+
+<!-- FOOTER PEMBUAT -->
+<div class="footer">
+  <p>Dibuat oleh: <b>Trio I Gusti Ramadhan</b></p>
+  <p>Kelas XI-2</p>
+  <p>SMA Negeri Pasirian</p>
+</div>
+
+<!-- MATERI -->
+<div id="materi" class="section">
+<div class="card">
+<h2>Pengertian</h2>
+<p>Titrasi adalah suatu metode analisis kimia kuantitatif yang digunakan untuk menentukan konsentrasi (kadar) suatu zat dalam larutan. Caranya adalah dengan mereaksikan larutan tersebut dengan larutan lain yang konsentrasinya sudah diketahui secara pasti (larutan standar).</p>
+<p>Dalam titrasi asam-basa, prinsip utamanya adalah reaksi netralisasi, di mana ion H^+ dari asam akan bereaksi dengan ion OH^- dari basa membentuk air (H_2O).</p>
+
+<h2>Reaksi</h2>
+<p>H⁺ + OH⁻ → H₂O</p>
+
+<h2>Jenis</h2>
+
+<p>1.Titrasi Asam Kuat dengan Basa Kuat</p>
+<p>2.Titrasi Asam Lemah dengan Basa Kuat</p>
+<p>3.Titrasi Basa Lemah dengan Asam Kuat</p>
+<p>4.Titrasi Asam Lemah dengan Basa Lemah</p>
+
+<h2>Titik Ekuivalen</h2>
+<p>Mol asam = mol basa</p>
+
+<h2>Rumus</h2>
+<p><b>Ma × Va = Mb × Vb</b></p>
+</div>
+</div>
+
+<div id="contoh" class="section">
+<div class="card">
+
+<h2>🧪 Contoh Soal + Pembahasan</h2>
+
+<p><b>Diketahui:</b></p>
+<ul>
+<li>Ma = 0,1 M</li>
+<li>Va = 25 mL</li>
+<li>Mb = 0,2 M</li>
+</ul>
+
+<p><b>Ditanya:</b></p>
+<p>Berapa volume basa (Vb)?</p>
+
+<p><b>Dijawab:</b></p>
+<p>
+Gunakan rumus:<br>
+<b>Ma × Va = Mb × Vb</b><br><br>
+
+Substitusi:<br>
+0,1 × 25 = 0,2 × Vb<br>
+2,5 = 0,2Vb<br><br>
+
+Vb = 2,5 / 0,2<br>
+Vb = <b>12,5 mL</b>
+</p>
+
+<hr>
+
+<p><b>Penjelasan:</b></p>
+<p>
+Pada titik ekuivalen, jumlah mol asam sama dengan mol basa.
+Itulah kenapa kita bisa langsung pakai rumus Ma × Va = Mb × Vb.
+</p>
+
+</div>
+</div>
+
+<!-- SIMULASI 1 -->
+<div id="sim1" class="section">
+<div class="card">
+<h2>⚗️ SIMULASI PERUBAHAN WARNA</h2>
+
+<button onclick="tetes()">Teteskan</button>
+<button onclick="reset1()">Reset</button>
+
+<div class="lab">
+<div id="cairan1" class="cairan"></div>
+</div>
+
+<p id="status1"></p>
+</div>
+</div>
+
+<!-- SIMULASI 2 -->
+<div id="sim2" class="section">
+<div class="card">
+<h2>🎯 STOP DI TITIK EKUIVALEN</h2>
+
+<button onclick="start()">Mulai</button>
+<button onclick="stop()">STOP</button>
+<button onclick="reset2()">Reset</button>
+
+<div class="lab">
+<div id="cairan2" class="cairan"></div>
+</div>
+
+<p id="status2"></p>
+</div>
+</div>
+
+<!-- LATIHAN -->
+<div id="latihan" class="section">
+<div class="card">
+<h2>Latihan Soal</h2>
+
+<p id="soal"></p>
+<input type="number" id="jawaban">
+<br>
+<button onclick="cek()">Cek</button>
+
+<p id="hasil"></p>
+<div id="pembahasan"></div>
+
+</div>
+</div>
+
+<script>
+function show(id){
+  document.querySelectorAll('.section').forEach(s=>s.style.display='none');
+  document.getElementById(id).style.display='block';
+}
+
+/* SIMULASI 1 */
+let v=0;
+function tetes(){
+  v++;
+  let c=document.getElementById("cairan1");
+  let s=document.getElementById("status1");
+
+  if(v<5){c.style.background="red"; s.innerHTML="Asam kuat biasanya pH kisaran 0-3";}
+  else if(v<8){c.style.background="orange"; s.innerHTML="Asam lemah biasanya pH kisaran 3-6,5";}
+  else if(v<12){c.style.background="green"; s.innerHTML="Ekuivalen/Netral pH 7";}
+  else if(v<15){c.style.background="pink"; s.innerHTML="Basa lemah biasanya pH kisaran 8-10,5";}
+  else{c.style.background="magenta"; s.innerHTML="Basa kuat biasanya pH kisaran 11-14";}
+}
+function reset1(){
+  v=0;
+  document.getElementById("cairan1").style.background="red";
+  document.getElementById("status1").innerHTML="";
+}
+
+/* SIMULASI 2 */
+let t=0, inter;
+function start(){
+  t=0;
+  inter=setInterval(()=>{
+    t++;
+    let c=document.getElementById("cairan2");
+
+    if(t<4)c.style.background="red";
+     else if(t<=5)c.style.background="orange";
+    else if(t<=6)c.style.background="green";
+    else if(t<=7)c.style.background="pink";
+    else c.style.background="magenta";
+
+    if(t>=8) clearInterval(inter);
+  },1000);
+}
+function stop(){
+  clearInterval(inter);
+  let s=document.getElementById("status2");
+
+  if(t>=5 && t<=6) s.innerHTML="🔥 PAS DISINI TITIK EKUIVALEN!";
+  else if(t<5) s.innerHTML="❌ Terlalu cepat di titik masih asam";
+  else s.innerHTML="❌ Terlalu lama di titik ini sudah basa";
+}
+function reset2(){
+  clearInterval(inter);
+  t=0;
+  document.getElementById("cairan2").style.background="red";
+  document.getElementById("status2").innerHTML="";
+}
+
+/* LATIHAN + PEMBAHASAN */
+let Ma,Mb,Va,ans;
+
+function gen(){
+  Ma=(Math.random()*0.3+0.1).toFixed(2);
+  Mb=(Math.random()*0.3+0.1).toFixed(2);
+  Va=Math.floor(Math.random()*20+20);
+  ans=(Ma*Va)/Mb;
+
+  document.getElementById("soal").innerHTML =
+  `Ma=${Ma} M, Va=${Va} mL, Mb=${Mb} M → Vb?`;
+}
+
+function cek(){
+  let u=document.getElementById("jawaban").value;
+  let hasil=document.getElementById("hasil");
+  let pembahasan=document.getElementById("pembahasan");
+
+  if(Math.abs(u-ans)<1){
+    hasil.innerHTML="🔥 Selamat Jawaban Kamu Benar!";
+  } else {
+    hasil.innerHTML="❌  Maaf Jawaban kamu Salah!";
+  }
+
+  pembahasan.innerHTML = `
+  <hr>
+  <b>Pembahasan:</b><br><br>
+
+  <b>Diketahui:</b><br>
+  Ma = ${Ma} M<br>
+  Va = ${Va} mL<br>
+  Mb = ${Mb} M<br><br>
+
+  <b>Ditanya:</b><br>
+  Vb = ?<br><br>
+
+  <b>Dijawab:</b><br>
+  Ma × Va = Mb × Vb<br>
+  (${Ma}) × (${Va}) = (${Mb}) × Vb<br>
+  ${(Ma*Va).toFixed(2)} = ${Mb} × Vb<br>
+  Vb = ${(Ma*Va).toFixed(2)} / ${Mb}<br>
+  Vb = <b>${ans.toFixed(2)} mL</b>
+  `;
+}
+
+gen();
+</script>
+
+</body>
+</html>
