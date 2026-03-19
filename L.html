@@ -2,6 +2,10 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
+
+<!-- WAJIB BIAR GAK BERANTAKAN -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Titrasi Asam Basa</title>
 
 <style>
@@ -13,10 +17,19 @@ body {
   text-align: center;
 }
 
-h1 { margin-top: 30px; }
+h1 {
+  margin-top: 30px;
+  font-size: 26px;
+}
 
-.menu { padding: 20px; }
-
+/* MENU FIX */
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  padding: 20px;
+}
 button {
   margin: 10px;
   padding: 12px 20px;
@@ -69,6 +82,7 @@ button {
 <button onclick="show('sim1')">⚗️ Simulasi 1</button>
 <button onclick="show('sim2')">🎯 Simulasi 2</button>
 <button onclick="show('latihan')">🧠 Latihan Soal</button>
+<button onclick="show('quiz')">📝 Quiz</button>
 </div>
 
 <!-- FOOTER PEMBUAT -->
@@ -187,7 +201,17 @@ Itulah kenapa kita bisa langsung pakai rumus Ma × Va = Mb × Vb.
 
 <p id="hasil"></p>
 <div id="pembahasan"></div>
+</div>
+</div>
 
+<!-- QUIZ -->
+<div id="quiz" class="section">
+<div class="card">
+<h2>Quiz 5 Soal</h2>
+<p id="quizSoal"></p>
+<input type="text" id="quizJawaban" placeholder="Ketik jawaban di sini..."><br>
+<button onclick="nextSoal()">Jawab</button>
+<p id="quizHasil"></p>
 </div>
 </div>
 
@@ -196,6 +220,7 @@ function show(id){
   document.querySelectorAll('.section').forEach(s=>s.style.display='none');
   document.getElementById(id).style.display='block';
 }
+
 
 /* SIMULASI 1 */
 let v=0;
@@ -267,7 +292,7 @@ function cek(){
   let pembahasan=document.getElementById("pembahasan");
 
   if(Math.abs(u-ans)<1){
-    hasil.innerHTML="🔥 Selamat Jawaban Kamu Benar!";
+    hasil.innerHTML="🔥  Selamat Jawaban Kamu Benar!";
   } else {
     hasil.innerHTML="❌  Maaf Jawaban kamu Salah!";
   }
@@ -294,6 +319,68 @@ function cek(){
 }
 
 gen();
+
+/* QUIZ FLEXIBLE */
+let qi=0,skor=0,data=[];
+
+function buatQuiz(){
+  data=[
+    {tipe:"hitung",Ma:0.1,Va:25,Mb:0.2,soal:"Ma=0.1 M, Va=25 mL, Mb=0.2 M → Vb?",ans:12.5},
+    {tipe:"konsep",soal:"pH saat ekuivalen (asam kuat + basa kuat)?",ans:["7","netral"]},
+    {tipe:"konsep",soal:"NaOH termasuk asam atau basa?",ans:["basa"]},
+    {tipe:"konsep",soal:"Jika basa berlebih, sifat larutan?",ans:["basa"]},
+    {tipe:"konsep",soal:"Jika asam lebih banyak, sifat larutan?",ans:["asam"]}
+  ];
+}
+
+function tampil(){
+  document.getElementById("quizSoal").innerHTML=`Soal ${qi+1}: ${data[qi].soal}`;
+}
+
+function nextSoal(){
+  let input=document.getElementById("quizJawaban").value.toLowerCase().trim();
+  let d=data[qi];
+  let benar=false;
+
+  if(d.tipe=="hitung"){
+    if(Math.abs(input-d.ans)<1) benar=true;
+  } else {
+    benar = d.ans.some(j=>input.includes(j));
+  }
+
+  if(benar) skor++;
+
+  qi++;
+
+  if(qi<5){
+    document.getElementById("quizJawaban").value="";
+    tampil();
+  } else {
+    tampilHasil();
+  }
+}
+
+function tampilHasil(){
+  let hasil=`<h3>Skor: ${skor}/5</h3><hr>`;
+
+  data.forEach((d,i)=>{
+    hasil+=`<b>Soal ${i+1}</b><br>${d.soal}<br><br>`;
+
+    if(d.tipe=="hitung"){
+      hasil+=`Jawaban: ${d.ans} mL<br><br>`;
+    } else {
+      hasil+=`Jawaban: ${d.ans[0]}<br><br>`;
+    }
+
+    hasil+="<hr>";
+  });
+
+  document.getElementById("quizSoal").innerHTML="Quiz selesai!";
+  document.getElementById("quizHasil").innerHTML=hasil;
+}
+
+buatQuiz();
+tampil();
 </script>
 
 </body>
